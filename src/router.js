@@ -3,6 +3,17 @@ const router = express.Router();
 const user = require("../src/controller/user");
 const { body, validationResult } = require('express-validator');
 const ModuleUser = require("./models/user");
+const multer = require("multer"); //middleware para upload de arquivos
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+})
+const upload = multer({storage});
 
 router.get("/", user.show);
 router.get("/:id", user.each);
@@ -27,5 +38,8 @@ router.post(
 router.put("/update/:id", user.update);
 router.delete("/delete/:id", user.delete);
 router.post("/login", user.login);
+router.post("/upload", upload.single("avatar"), (req, res, next) =>{
+  res.json(req.file);
+});
 
 module.exports = router;

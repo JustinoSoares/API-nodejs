@@ -3,6 +3,7 @@
 - npm install sequelize -g
 - npm install bcrypt // criptografia de senhas
 - npm install jsonwebtoken
+- npm install --save multer //middleware para upload de arquivos
 
 
 ## Validação
